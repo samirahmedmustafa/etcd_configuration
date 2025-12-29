@@ -28,6 +28,13 @@
 	  openssl req -new -key etcd-server2.key -out etcd-server2.csr -config etcd-server2.cnf
 	  openssl x509 -req -in etcd-server2.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out etcd-server2.crt -days 1000 -extensions v3_req -extfile etcd-server2.cnf
 	```
+- Copy certificates to the /etc/etcd in both servers
+  ```
+  mkdir /etc/etcd
+  cp etcd-server1.crt etcd-server1.key ca.crt /etc/etcd
+  ssh master-2 mkdir /etc/etcd
+  scp etcd-server2.crt etcd-server2.key ca.crt master-2:/etc/etcd  
+  ```
 - Download etcd, extract it and move it to a standard binaries location
 
   	```

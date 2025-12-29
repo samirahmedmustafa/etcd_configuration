@@ -32,5 +32,9 @@
   tar -xzf etcd-v3.6.7-linux-amd64.tar.gz
   cp etcd-v3.6.7-linux-amd64/etcd* /usr/bin/
 
-- Create the systemd service files for the 2 servers as mentioned in the links [server1](SERVER1etcd.service) and [server2](SERVER2etcd.service)
-- Start etcd services
+- Create the systemd service files for the 2 servers as mentioned in the links [server1](SERVER1etcd.service) and [server2](SERVER2etcd.service) those files should be renamed to etcd.service in the 2 servers
+
+- Start etcd services in the 2 servers
+
+	systemctl daemon-reload
+	systemctl start etcd

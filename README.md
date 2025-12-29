@@ -63,6 +63,6 @@
 
 	```
  	systemctl daemon-reload
-	systemctl start etcd
+	systemctl enable --now etcd
 	etcdctl member list   --endpoints=https://127.0.0.1:2379   --cacert=/etc/etcd/ca.crt   --cert=/etc/etcd/etcd-server1.crt   --key=/etc/etcd/etcd-server1.key
  	```

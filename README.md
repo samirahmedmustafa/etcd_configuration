@@ -37,4 +37,5 @@
 - Start etcd services in the 2 servers
 
 	systemctl daemon-reload
+
 	systemctl start etcd

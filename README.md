@@ -31,7 +31,7 @@
 - Download etcd, extract it and move it to a standard binaries location
 
   	```
-   		wget https://github.com/etcd-io/etcd/releases/download/v3.6.7/etcd-v3.6.7-linux-amd64.tar.gz
+   wget https://github.com/etcd-io/etcd/releases/download/v3.6.7/etcd-v3.6.7-linux-amd64.tar.gz
   		tar -xzf etcd-v3.6.7-linux-amd64.tar.gz
   		cp etcd-v3.6.7-linux-amd64/etcd* /usr/bin/
 	```

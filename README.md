@@ -15,4 +15,4 @@
     -addext "authorityKeyIdentifier=keyid:always,issuer" \
     -out ca.crt
 
-- Generate the servers openssl configuration files such as mentioned [server1](etcd-server1.cnf) [server2](etcd-server1.cnf)
+- Generate the servers openssl configuration files such as mentioned [server1](etcd-server1.cnf) [server2](etcd-server2.cnf)

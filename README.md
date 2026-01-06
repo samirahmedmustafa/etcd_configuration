@@ -21,17 +21,17 @@
 	```
 	  openssl genrsa -out etcd-server1.key 2048
 	  openssl req -new -key etcd-server1.key -out etcd-server1.csr -config etcd-server1.cnf
-	  openssl x509 -req -in etcd-server1.csr -CA etcd-ca.crt -CAkey ca.key -CAcreateserial -out etcd-server1.crt -days 1000 -extensions v3_req -extfile etcd-server1.cnf
+	  openssl x509 -req -in etcd-server1.csr -CA etcd-ca.crt -CAkey etcd-ca.key -CAcreateserial -out etcd-server1.crt -days 1000 -extensions v3_req -extfile etcd-server1.cnf
 	```
 	```
 	  openssl genrsa -out etcd-server2.key 2048
 	  openssl req -new -key etcd-server2.key -out etcd-server2.csr -config etcd-server2.cnf
-	  openssl x509 -req -in etcd-server2.csr -CA etcd-ca.crt -CAkey ca.key -CAcreateserial -out etcd-server2.crt -days 1000 -extensions v3_req -extfile etcd-server2.cnf
+	  openssl x509 -req -in etcd-server2.csr -CA etcd-ca.crt -CAkey etcd-ca.key -CAcreateserial -out etcd-server2.crt -days 1000 -extensions v3_req -extfile etcd-server2.cnf
 	```
 - Verify
 
 	```
-	  openssl verify -CAfile ca.crt etcd-server1.crt && openssl verify -CAfile etcd-ca.crt etcd-server2.crt
+	  openssl verify -CAfile etcd-ca.crt etcd-server1.crt && openssl verify -CAfile etcd-ca.crt etcd-server2.crt
 	  openssl x509 -in etcd-server1.crt -noout -text | grep -A2 "Extended Key Usage"
 	  openssl x509 -in etcd-server2.crt -noout -text | grep -A2 "Extended Key Usage"
 			  

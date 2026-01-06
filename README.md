@@ -3,12 +3,12 @@
 - Generate the CA using the below command (pay attention to CA:TRUE)
 
 	```
-	  openssl genrsa -out ca.key 4096
+	  openssl genrsa -out etcd-ca.key 4096
 	  openssl req -x509 -new -nodes \
-	    -key ca.key \
+	    -key etcd-ca.key \
 	    -sha256 \
 	    -days 3650 \
-	    -subj "/CN=etcd-root-ca" \
+	    -subj "/CN=etcd-ca" \
 	    -addext "basicConstraints=critical,CA:TRUE" \
 	    -addext "keyUsage=critical,keyCertSign,cRLSign" \
 	    -addext "subjectKeyIdentifier=hash" \
@@ -21,17 +21,17 @@
 	```
 	  openssl genrsa -out etcd-server1.key 2048
 	  openssl req -new -key etcd-server1.key -out etcd-server1.csr -config etcd-server1.cnf
-	  openssl x509 -req -in etcd-server1.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out etcd-server1.crt -days 1000 -extensions v3_req -extfile etcd-server1.cnf
+	  openssl x509 -req -in etcd-server1.csr -CA etcd-ca.crt -CAkey ca.key -CAcreateserial -out etcd-server1.crt -days 1000 -extensions v3_req -extfile etcd-server1.cnf
 	```
 	```
 	  openssl genrsa -out etcd-server2.key 2048
 	  openssl req -new -key etcd-server2.key -out etcd-server2.csr -config etcd-server2.cnf
-	  openssl x509 -req -in etcd-server2.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out etcd-server2.crt -days 1000 -extensions v3_req -extfile etcd-server2.cnf
+	  openssl x509 -req -in etcd-server2.csr -CA etcd-ca.crt -CAkey ca.key -CAcreateserial -out etcd-server2.crt -days 1000 -extensions v3_req -extfile etcd-server2.cnf
 	```
 - Verify
 
 	```
-	  openssl verify -CAfile ca.crt etcd-server1.crt && openssl verify -CAfile ca.crt etcd-server2.crt
+	  openssl verify -CAfile ca.crt etcd-server1.crt && openssl verify -CAfile etcd-ca.crt etcd-server2.crt
 	  openssl x509 -in etcd-server1.crt -noout -text | grep -A2 "Extended Key Usage"
 	  openssl x509 -in etcd-server2.crt -noout -text | grep -A2 "Extended Key Usage"
 			  
@@ -39,9 +39,9 @@
 - Copy certificates to the /etc/etcd in both servers
   ```
   mkdir /etc/etcd
-  cp etcd-server1.crt etcd-server1.key ca.crt /etc/etcd
+  cp etcd-server1.crt etcd-server1.key etcd-ca.crt /etc/etcd
   ssh master-2 mkdir /etc/etcd
-  scp etcd-server2.crt etcd-server2.key ca.crt master-2:/etc/etcd  
+  scp etcd-server2.crt etcd-server2.key etcd-ca.crt master-2:/etc/etcd  
   ```
 - Download etcd, extract it and move it to a standard binaries location
 
@@ -64,5 +64,5 @@
 	```
  	systemctl daemon-reload
 	systemctl enable --now etcd
-	etcdctl member list   --endpoints=https://127.0.0.1:2379   --cacert=/etc/etcd/ca.crt   --cert=/etc/etcd/etcd-server1.crt   --key=/etc/etcd/etcd-server1.key
+	etcdctl member list   --endpoints=https://127.0.0.1:2379   --cacert=/etc/etcd/etcd-ca.crt   --cert=/etc/etcd/etcd-server1.crt   --key=/etc/etcd/etcd-server1.key
  	```

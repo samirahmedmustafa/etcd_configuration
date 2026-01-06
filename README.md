@@ -54,7 +54,7 @@
 - Create the systemd service files for the 2 servers as mentioned in the links [server1](SERVER1etcd.service) and [server2](SERVER2etcd.service) those files should be renamed to etcd.service in the 2 servers
 	
 	```
-	  cp SERVER1etcd.service master-1:/etc/systemd/system/etcd.service	
+	  cp SERVER1etcd.service /etc/systemd/system/etcd.service	
 	  scp SERVER2etcd.service master-2:/etc/systemd/system/etcd.service	
 
 	```

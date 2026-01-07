@@ -66,3 +66,5 @@
 	systemctl enable --now etcd
 	etcdctl member list   --endpoints=https://127.0.0.1:2379   --cacert=/etc/etcd/etcd-ca.crt   --cert=/etc/etcd/etcd-server1.crt   --key=/etc/etcd/etcd-server1.key
  	```
+
+ [Next: admin account setup](docs/admin-account-setup.md) [Next: admin account setup](docs/admin-account-setup.md)
